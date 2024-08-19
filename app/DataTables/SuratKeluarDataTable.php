@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\SuratMasuk;
+use App\Models\SuratKeluar;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Illuminate\Support\Facades\Storage;
@@ -13,7 +13,7 @@ use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 
-class SuratMasukDataTable extends DataTable
+class SuratKeluarDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -25,7 +25,7 @@ class SuratMasukDataTable extends DataTable
         $user = auth()->user();
 
         if($user->role == 'admin'){
-            $query = SuratMasuk::query();
+            $query = SuratKeluar::query();
         }elseif($user->role == 'user'){
             // $query = SuratMasuk::where('user_id', $user->id)->orWhere('disposisi', $user->id);
         }
@@ -49,7 +49,7 @@ class SuratMasukDataTable extends DataTable
         ->addColumn('action', function($item){
             return '
                  <div class="d-flex justify-content-between">
-                     <a href="'.route('surat-masuk.show', $item->id).'" class="btn btn-sm btn-primary text-white px-2 mx-2" title="preview"><i class="fa-solid fa-eye"></i></a>
+                     <a href="'.route('surat-keluar.show', $item->id).'" class="btn btn-sm btn-primary text-white px-2 mx-2" title="preview"><i class="fa-solid fa-eye"></i></a>
 
                      <a href="'.Storage::url($item->file).'" class="btn btn-sm btn-secondary text-white px-2 mx-2" target="_blank" title="download"><i class="fa-solid fa-download"></i></a>
 
@@ -63,21 +63,9 @@ class SuratMasukDataTable extends DataTable
     /**
      * Get the query source of dataTable.
      */
-    public function query(SuratMasuk $model): QueryBuilder
+    public function query(SuratKeluar $model): QueryBuilder
     {
         return $model->newQuery();
-        // $query = $model->newQuery();
-
-        // if ($search = $this->request()->get('search')) {
-        //     $query->where(function($query) use ($search) {
-        //         $query->where('no_surat', 'like', "%{$search}%")
-        //             ->orWhere('tgl_surat', 'like', "%{$search}%")
-        //             ->orWhere('surat_dari', 'like', "%{$search}%")
-        //             ->orWhere('perihal', 'like', "%{$search}%");
-        //     });
-        // }
-
-        // return $query;
     }
 
     /**
@@ -86,12 +74,11 @@ class SuratMasukDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('suratmasuk-table')
+                    ->setTableId('suratkeluar-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
                     ->orderBy(1)
-                    // ->searching(false)
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
@@ -109,7 +96,6 @@ class SuratMasukDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-           
             Column::make('no_surat')->title('No Surat'),
             Column::make('tgl_surat')->title('Tanggal Surat'),
             Column::make('surat_dari')->title('Asal'),
@@ -120,8 +106,7 @@ class SuratMasukDataTable extends DataTable
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
-                  ->addClass('text-center')
-                  ->title('Aksi'),
+                  ->addClass('text-center'),
         ];
     }
 
@@ -130,6 +115,6 @@ class SuratMasukDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'SuratMasuk_' . date('YmdHis');
+        return 'SuratKeluar_' . date('YmdHis');
     }
 }

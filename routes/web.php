@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\SuratKeluarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,5 @@ Route::middleware('checkrole: admin')->group(function(){
     Route::resource('surat-masuk', SuratMasukController::class);
     Route::resource('users', UserController::class);
     Route::resource('anggota', AnggotaController::class);
+    Route::resource('surat-keluar', SuratKeluarController::class);
 });

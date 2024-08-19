@@ -34,12 +34,12 @@
       </a>
       <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="forms-elements.html">
+          <a href="{{route('surat-keluar.create')}}">
             <i class="bi bi-circle"></i><span class="text-capitalize">buat surat</span>
           </a>
         </li>
         <li>
-          <a href="forms-layouts.html">
+          <a href="{{route('surat-keluar.index')}}">
             <i class="bi bi-circle"></i><span class="text-capitalize">surat terkirim</span>
           </a>
         </li>
