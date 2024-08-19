@@ -95,25 +95,21 @@
             
             <div class="col-md-3 d-none" id="diteruskan-kepada">
               <label for="inputState" class="form-label text-capitalize">diteruskan kepada<span class="text-danger">*</span></label>
-              <select class="form-select select2" name="diteruskan">
-                <option value="-">--pilih--</option>
-                <option value="KAURDAL">KAURDAL</option>
-                <option value="BAGTU">BAGTU</option>
-                <option value="KASI LATGADIK">KASI LATGADIK</option>
-                <option value="KABAGREN">KABAGREN</option>
-                <option value="KASI VALDIK">KASI VALDIK</option>
+              <select class="form-select select2" name="diteruskan[]" multiple="multiple">
+                <option>--pilih disposisi--</option>
+                @foreach ($users as $user)
+                  <option value="{{$user->id}}">{{$user->jabatan}}</option> 
+                @endforeach
               </select>
             </div>
 
             <div class="col-md-3 d-none" id="cc">
               <label for="ccField" class="form-label text-uppercase">cc<span class="text-danger">*</span></label>
-              <select name="cc" class="form-select select2">
-                <option value="-">--pilih--</option>
-                <option value="KAURDAL">KAURDAL</option>
-                <option value="BAGTU">BAGTU</option>
-                <option value="KASI LATGADIK">KASI LATGADIK</option>
-                <option value="KABAGREN">KABAGREN</option>
-                <option value="KASI VALDIK">KASI VALDIK</option>
+              <select name="cc[]" class="form-select select2" multiple="multiple">
+                <option>--pilih disposisi--</option>
+                @foreach ($users as $user)
+                  <option value="{{$user->id}}">{{$user->jabatan}}</option> 
+                @endforeach
               </select>
             </div>
 

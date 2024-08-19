@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\SuratMasuk;
 use Illuminate\Http\Request;
 use function Termwind\render;
+use App\Models\AnggotaSuratMasuk;
 use Illuminate\Support\Facades\Auth;
 use App\DataTables\SuratMasukDataTable;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -37,23 +38,50 @@ class SuratMasukController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = Auth::id();
+        $data = $request->except(['disposisi', 'cc', 'diteruskan']);
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $data['file'] = $file->storeAs('public/surat_masuk', $file->getClientOriginalName());
         }
 
-        // foreach ($data['disposisi'] as $disposisi) {
-        //     $data['disposisi'] = $disposisi;
-        //     SuratMasuk::create($data);
-        // }
+        $suratMasuk = SuratMasuk::create($data + ['user_id' => Auth::id()]);
 
-        foreach ($data['disposisi'] as $disposisi) {
-            $data['disposisi'] = $disposisi;
-            SuratMasuk::create($data)->id;
+        if ($request->has('disposisi')) {
+            foreach ($request->input('disposisi') as $anggotaId) {
+                if ($anggotaId) {
+                    AnggotaSuratMasuk::create([
+                        'surat_masuk_id' => $suratMasuk->id,
+                        'user_id' => $anggotaId,
+                        'type' => 'disposisi'
+                    ]);
+                }
+            }
         }
-        
-        // SuratMasuk::create($data);
+
+        if ($request->has('cc')) {
+            foreach ($request->input('cc') as $anggotaId) {
+                if ($anggotaId) {
+                    AnggotaSuratMasuk::create([
+                        'surat_masuk_id' => $suratMasuk->id,
+                        'user_id' => $anggotaId,
+                        'type' => 'cc'
+                    ]);
+                }
+            }
+        }
+
+        if ($request->has('diteruskan')) {
+            foreach ($request->input('diteruskan') as $anggotaId) {
+                if ($anggotaId) {
+                    AnggotaSuratMasuk::create([
+                        'surat_masuk_id' => $suratMasuk->id,
+                        'user_id' => $anggotaId,
+                        'type' => 'diteruskan'
+                    ]);
+                }
+            }
+        }
 
         Alert::success('success', 'Surat Berhasil diKirim')->autoclose(2000)->toToast();
         return redirect(route('surat-masuk.index'));
@@ -64,6 +92,7 @@ class SuratMasukController extends Controller
      */
     public function show(SuratMasuk $suratMasuk)
     {
+        $suratMasuk = SuratMasuk::with('anggotaSuratMasuk.user')->findOrFail($suratMasuk->id);
         return view('pages.suratmasuk.show', compact('suratMasuk'));
     }
 

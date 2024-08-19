@@ -27,7 +27,7 @@ class SuratMasukDataTable extends DataTable
         if($user->role == 'admin'){
             $query = SuratMasuk::query();
         }elseif($user->role == 'user'){
-            $query = SuratMasuk::where('user_id', $user->id)->orWhere('disposisi', $user->id);
+            // $query = SuratMasuk::where('user_id', $user->id)->orWhere('disposisi', $user->id);
         }
         return (new EloquentDataTable($query))
         ->addIndexColumn()

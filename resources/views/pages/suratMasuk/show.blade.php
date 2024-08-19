@@ -36,7 +36,11 @@
 
           <div class="row my-2">
             <div class="col-lg-3 col-md-4 label">Disposisi</div>
-            <div class="col-lg-9 col-md-8">: {{$suratMasuk->disposisi}}</div>
+            <div class="col-lg-9 col-md-8">:
+                @foreach($suratMasuk->anggotaSuratMasuk as $anggota)
+                    {{$anggota->user->name}}
+                @endforeach
+            </div>
           </div>
 
           <div class="row my-2">
@@ -46,7 +50,11 @@
 
           <div class="row my-2">
             <div class="col-lg-3 col-md-4 label">CC</div>
-            <div class="col-lg-9 col-md-8">: {{$suratMasuk->cc}}</div>
+            <div class="col-lg-9 col-md-8">:
+              @foreach ($suratMasuk->anggotaSuratMasuk as $anggota)
+                {{$anggota->user->name}}
+              @endforeach
+            </div>
           </div>
 
           <div class="row">

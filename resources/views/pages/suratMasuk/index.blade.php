@@ -24,8 +24,6 @@
                       <a href="{{ route('surat-masuk.index') }}" class="btn btn-sm btn-outline-secondary py-2 px-4 text-dark mx-2 rounded"><i class="fas fa-filter"></i> Filter</a>
                   </div>
               </form>
-              
-              
             </div>
             
               <div class="col-lg-6 text-end">

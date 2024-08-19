@@ -23,9 +23,9 @@ return new class extends Migration
             $table->string('jenis_surat');
             $table->string('klasifikasi_surat');
             $table->string('derajat_surat');
-            $table->string('disposisi')->nullable();
-            $table->string('diteruskan')->nullable();
-            $table->string('cc')->nullable();
+            // $table->string('disposisi')->nullable();
+            // $table->string('diteruskan')->nullable();
+            // $table->string('cc')->nullable();
             $table->text('isi_surat')->nullable();
             $table->string('file')->nullable();
             $table->timestamps();
